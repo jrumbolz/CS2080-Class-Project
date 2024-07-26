@@ -17,13 +17,13 @@ Jed and Ryan's Weather App is a free weather application hosted on a web server 
 1. Any mobile device with data connectivity
 
 ## Installation
-See developer's documentation [here](insert link here).
+See developer's documentation.
 
 ## Usage
-See developer's documentation [here](insert link here).
+See developer's documentation 
 
 ## Configuration
-See developer's documentation [here](insert link here).
+See developer's documentation
 
 ## Development
 **Technologies and frameworks**:
