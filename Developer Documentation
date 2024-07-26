@@ -131,7 +131,7 @@ To do this, log in to WordPress and go to the dashboard.
 	Go to Setting, then Permalinks.
 	Select the Post name option and click Save Changes.
 
-You’ll need to enable Apache’s rewrite mod:
+Enable Apache’s rewrite mod:
 
 	sudo a2enmod rewrite
 
