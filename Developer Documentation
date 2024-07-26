@@ -56,102 +56,134 @@ Now change the ownership of all these files to the Apache user:
 
 Set up your WordPress Database
 Set up MySQL/MariaDB
-To get your WordPress site set up, you need a database. This is where MySQL and MariaDB come in!
+	To get your WordPress site set up, you need a database. This is where MySQL and MariaDB come in!
 	Run the MySQL secure installation command in the terminal window.
-sudo mysql_secure_installation
-o	You will be asked Enter current password for root (enter for none): — press Enter.
-o	Type in Y and press Enter to Set root password?.
-o	Type in a password at the New password: prompt, and press Enter. Important: remember this root password, as you will need it later to set up WordPress.
-o	Type in Y to Remove anonymous users.
-o	Type in Y to Disallow root login remotely.
-o	Type in Y to Remove test database and access to it.
-o	Type in Y to Reload privilege tables now.
-When complete, you will see the message All done! and Thanks for using MariaDB!.
+
+	sudo mysql_secure_installation
+You will be asked Enter current password for root (enter for none): — press Enter.
+
+	Type in Y and press Enter to Set root password?.
+	Type in a password at the New password: prompt, and press Enter. Important: remember this root password, as you will need it later to set up WordPress.
+	Type in Y to Remove anonymous users.
+	Type in Y to Disallow root login remotely.
+	Type in Y to Remove test database and access to it.
+	Type in Y to Reload privilege tables now.
+
+	When complete, you will see the message All done! and Thanks for using MariaDB!.
+
 Create the WordPress database
-o	Run mysql in the terminal window:
-sudo mysql -uroot -p
-o	Enter the root password you created.
+	Run mysql in the terminal window:
+
+	sudo mysql -uroot -p
+	
+	Enter the root password you created.
+
 You will be greeted by the message Welcome to the MariaDB monitor.
-o	Create the database for your WordPress installation at the MariaDB [(none)]> prompt using:
+	Create the database for your WordPress installation at the MariaDB [(none)]> prompt using:
+
 create database wordpress;
 Note the semi-colon ending the statement.
+
 If this has been successful, you should see this:
 Query OK, 1 row affected (0.00 sec)
  
-o	Now grant database privileges to the root user. Note: you will need to enter your own password after IDENTIFIED BY.
-GRANT ALL PRIVILEGES ON wordpress.* TO 'root'@'localhost' IDENTIFIED BY 'YOURPASSWORD';
-o	For the changes to take effect, you will need to flush the database privileges:
+	Now grant database privileges to the root user. Note: you will need to enter your own password after IDENTIFIED BY.
+	GRANT ALL PRIVILEGES ON wordpress.* TO 'root'@'localhost' IDENTIFIED BY 'YOURPASSWORD';
+	For the changes to take effect, you will need to flush the database privileges:
+
 FLUSH PRIVILEGES;
-o	Exit the MariaDB prompt with Ctrl + D.
-o	Restart your Raspberry Pi:
-sudo reboot
+
+	Exit the MariaDB prompt with Ctrl + D.
+	Restart your Raspberry Pi:
+
+	sudo reboot
 
 WordPress configuration
-o	Open the web browser on your Pi and goto https://localhost, you should see a WordPress page asking to pick your language.
+	Open the web browser on your Pi and goto https://localhost, you should see a WordPress page asking to pick your language.
  
-o	Select your language and click Continue.
+	Select your language and click Continue.
+
 You will be presented with the WordPress welcome screen.
  
-o	Click the Let’s go! button.
-o	Now fill out the basic site information as follows:
+	Click the Let’s go! button.
+
+Now fill out the basic site information as follows:
+
 Database Name:      wordpress
 User Name:          root
 Password:           <YOUR PASSWORD>
 Database Host:      localhost
 Table Prefix:       wp_
-o	Click Submit to proceed.
-o	Click the Run the install button.
+
+	Click Submit to proceed.
+	Click the Run the install button.
+
 Now you’re getting close!
  
 Fill out the information: give your site a title, create a username and password, and enter your email address. Hit the Install WordPress button, then log in using the account you just created.
 Now you’re logged in and have your site set up, you can see the website by visiting your https://localhost/wp-admin.
 Log in to WordPress from another computer
 Friendly permalinks
+
 It’s recommended that you change your permalink settings to make your URLs more friendly.
 To do this, log in to WordPress and go to the dashboard.
-o	Go to Setting, then Permalinks.
-o	Select the Post name option and click Save Changes.
+
+	Go to Setting, then Permalinks.
+	Select the Post name option and click Save Changes.
+
 You’ll need to enable Apache’s rewrite mod:
-sudo a2enmod rewrite
+
+	sudo a2enmod rewrite
+
 You’ll also need to tell the virtual host serving the site to allow requests to be overwritten.
-o	Edit the Apache configuration file for your virtual host:
-sudo mousepad /etc/apache2/sites-available/000-default.conf
-o	Add the following lines after line 1.
-<Directory "/var/www/html">
-    AllowOverride All
-</Directory>
-o	Ensure it’s within the <VirtualHost *:80> like so:
-<VirtualHost *:80>
-    <Directory "/var/www/html">
-        AllowOverride All
-    </Directory>
-    ...
-o	Save the file and exit.
-o	Restart Apache.
-sudo service apache2 restart
+
+Edit the Apache configuration file for your virtual host:
+
+	sudo mousepad /etc/apache2/sites-available/000-default.conf
+
+Add the following lines after line 1.
+	<Directory "/var/www/html">
+	    AllowOverride All
+	</Directory>
+		Ensure it’s within the <VirtualHost *:80> like so:
+	<VirtualHost *:80>
+	    <Directory "/var/www/html">
+	        AllowOverride All
+	    </Directory>
+	    ...
+		Save the file and exit.
+		Restart Apache.
+	
+	sudo service apache2 restart
 
 
 Extracting the files for the weather app
-If there is an issue with permission please change to Super User
-Download the apache2.tar and html.tar file
-Move and extract the apache2.tar in /etc directory by typing the command below into the terminal
-chmod 777 /etc
-cd /Downloads
-mv apache2.tar /etc
-cd /etc
-tar -xvf apache2.tar ./etc
-Then delete the tar file by type the command below into the terminal
-rm apache2.tar
-Move and extract the html.tar in /var/www directory by typing the commands below into the terminal
-chmod 777 /etc
-cd  /Downloads
-mv html.tar /var/www/
-cd /var/www
-tar -xvf html.tar ./etc
-Then delete the tar file by type the command below into the terminal
-rm html.tar
 
-WordPress no has everything needed to run the weather app, access it by typing in https://localhost into a web browser and enjoy
+If there is an issue with permission please change to Super User
+
+Download the apache2.tar and html.tar file
+
+Move and extract the apache2.tar in /etc directory by typing the command below into the terminal
+
+	chmod 777 /etc
+	cd /Downloads
+	mv apache2.tar /etc
+	cd /etc
+	tar -xvf apache2.tar ./etc
+	Then delete the tar file by type the command below into the terminal
+	rm apache2.tar
+
+Move and extract the html.tar in /var/www directory by typing the commands below into the terminal
+
+	chmod 777 /etc
+	cd  /Downloads
+	mv html.tar /var/www/
+	cd /var/www
+	tar -xvf html.tar ./etc
+	Then delete the tar file by type the command below into the terminal
+	rm html.tar
+
+WordPress now has everything needed to run the weather app, access it by typing in https://localhost into a web browser and enjoy
 
 
 Sources: 
